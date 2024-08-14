@@ -1,0 +1,91 @@
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+
+public class AplicativoAguaStyle {
+
+    public static void main(String[] args) {
+       
+        JFrame frame = new JFrame("Calculadora de Consumo de Água");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+        frame.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10); // Padding
+
+        
+        JLabel pesoLabel = new JLabel("Insira seu peso:");
+        pesoLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        frame.add(pesoLabel, gbc);
+        
+        JTextField pesoField = new JTextField(10);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        frame.add(pesoField, gbc);
+        
+        JLabel vezesLabel = new JLabel("Quantas vezes por dia você pode beber água?");
+        vezesLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.WEST;
+        frame.add(vezesLabel, gbc);
+        
+        JTextField vezesField = new JTextField(10);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        frame.add(vezesField, gbc);
+        
+        JButton calcularButton = new JButton("Calcular");
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        frame.add(calcularButton, gbc);
+        
+        JLabel resultadoLabel = new JLabel("Quantidade de água por vez:");
+        resultadoLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.WEST;
+        frame.add(resultadoLabel, gbc);
+        
+        JTextField resultadoField = new JTextField(10);
+        resultadoField.setEditable(false);
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        frame.add(resultadoField, gbc);
+        
+      
+        calcularButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int peso = Integer.parseInt(pesoField.getText());
+                    int vezesPorDia = Integer.parseInt(vezesField.getText());
+                    
+                    double resultado = peso * 0.35 / 10;
+                    double resultadoPorVez = resultado / vezesPorDia;
+                    
+                    resultadoField.setText(String.format("%.2f litros", resultadoPorVez));
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, insira valores válidos.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        
+       
+        frame.setVisible(true);
+    }
+}
